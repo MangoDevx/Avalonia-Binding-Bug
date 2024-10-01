@@ -15,9 +15,10 @@ public partial class MainViewModel : ViewModelBase
     {
         ItemSource = new()
         {
-            new() { Name = "Number", Value = 0, DisplayType = false },
-            new() { Name = "String", Value = "Test", DisplayType = true },
-            new() { Name = "Date", Value = DateTimeOffset.Now, DisplayType = false, IsDate = true },
+            new() { Name = "Number", Value = 0, IsNumber = true },
+            new() { Name = "String", Value = "Test", IsString = true },
+            new() { Name = "Number String", Value = "123", IsString = true, IsNumber = true},
+            new() { Name = "Date", Value = DateTimeOffset.Now, IsDate = true },
         };
     }
 }
@@ -27,12 +28,9 @@ public partial class ItemViewModel : ObservableObject
     [ObservableProperty] private string _name;
     [ObservableProperty] private object? _value;
 
-    /// <summary>
-    /// False -> Number
-    /// True ->  String
-    /// </summary>
-    [ObservableProperty] private bool _displayType;
-    [ObservableProperty] private bool _isDate;
+    [ObservableProperty] private bool _isNumber = false;
+    [ObservableProperty] private bool _isString = false;
+    [ObservableProperty] private bool _isDate = false;
 }
 
 

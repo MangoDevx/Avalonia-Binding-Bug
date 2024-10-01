@@ -40,41 +40,59 @@
 									
 									<StackPanel.IsVisible>
 										<MultiBinding Converter="{x:Static BoolConverters.And}">
-											<Binding Path="!IsDate"/>
-											<Binding Path="!DisplayType" />
+											<Binding Path="!IsString"/>
+											<Binding Path="IsNumber" />
 										</MultiBinding>
 									</StackPanel.IsVisible>
 									<StackPanel.IsEnabled>
 										<MultiBinding Converter="{x:Static BoolConverters.And}">
-											<Binding Path="!IsDate"/>
-											<Binding Path="!DisplayType" />
+											<Binding Path="!IsString"/>
+											<Binding Path="IsNumber" />
 										</MultiBinding>
 									</StackPanel.IsEnabled>
 									
-									<NumericUpDown Value="{Binding Value}" />
+									<NumericUpDown Value="{Binding Value}" ValueChanged="NumericUpDown_ValueChanged"/>
 								</StackPanel>
 
 								<StackPanel Grid.Row="0" Grid.Column="0">
 									
 									<StackPanel.IsVisible>
 										<MultiBinding Converter="{x:Static BoolConverters.And}">
-											<Binding Path="!IsDate"/>
-											<Binding Path="DisplayType" />
+											<Binding Path="IsString"/>
+											<Binding Path="!IsNumber" />
 										</MultiBinding>
 									</StackPanel.IsVisible>
 									<StackPanel.IsEnabled>
 										<MultiBinding Converter="{x:Static BoolConverters.And}">
-											<Binding Path="!IsDate"/>
-											<Binding Path="DisplayType" />
+											<Binding Path="IsString"/>
+											<Binding Path="!IsNumber" />
 										</MultiBinding>
 									</StackPanel.IsEnabled>
 									
-									<TextBox Text="{Binding Value}"/>
+									<TextBox Text="{Binding Value}" Watermark="Text Value" TextChanged="TextBox_TextChanged"/>
+								</StackPanel>
+
+								<StackPanel Grid.Row="0" Grid.Column="0">
+
+									<StackPanel.IsVisible>
+										<MultiBinding Converter="{x:Static BoolConverters.And}">
+											<Binding Path="IsString"/>
+											<Binding Path="IsNumber" />
+										</MultiBinding>
+									</StackPanel.IsVisible>
+									<StackPanel.IsEnabled>
+										<MultiBinding Converter="{x:Static BoolConverters.And}">
+											<Binding Path="IsString"/>
+											<Binding Path="IsNumber" />
+										</MultiBinding>
+									</StackPanel.IsEnabled>
+
+									<TextBox Text="{Binding Value}" Watermark="Number Text Value" TextChanged="TextBox_TextChanged"/>
 								</StackPanel>
 
 								<StackPanel IsVisible="{Binding IsDate}" IsEnabled="{Binding IsDate}"
 											Grid.Row="0" Grid.Column="0">
-									<DatePicker SelectedDate="{Binding Value}"/>
+									<DatePicker SelectedDate="{Binding Value}" SelectedDateChanged="DatePicker_SelectedDateChanged"/>
 								</StackPanel>
 							</Grid>
 						</DataTemplate>
