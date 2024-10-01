@@ -1,0 +1,88 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:PlaygroundAv.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="PlaygroundAv.Views.MainView"
+             x:DataType="vm:MainViewModel">
+	<Design.DataContext>
+		<!-- This only sets the DataContext for the previewer in an IDE,
+         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+		<vm:MainViewModel />
+	</Design.DataContext>
+
+	<Grid RowDefinitions="auto, *">
+		<Button Content="Start" Grid.Row="0"
+				Command="{Binding StartCommand}"/>
+
+		<DataGrid Grid.Row="1" ItemsSource="{Binding ItemSource}"
+				  AutoGenerateColumns="False" GridLinesVisibility="All">
+			<DataGrid.Columns>
+
+				<DataGridTemplateColumn Header="Name" Width="*">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Grid Height="50" Margin="1">
+								<TextBlock Text="{Binding Name}" />
+							</Grid>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+
+				<DataGridTemplateColumn Header="Value" Width="*">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<Grid Height="50" Margin="1"
+								RowDefinitions="*" ColumnDefinitions="*">
+
+								<StackPanel Grid.Row="0" Grid.Column="0">
+									
+									<StackPanel.IsVisible>
+										<MultiBinding Converter="{x:Static BoolConverters.And}">
+											<Binding Path="!IsDate"/>
+											<Binding Path="!DisplayType" />
+										</MultiBinding>
+									</StackPanel.IsVisible>
+									<StackPanel.IsEnabled>
+										<MultiBinding Converter="{x:Static BoolConverters.And}">
+											<Binding Path="!IsDate"/>
+											<Binding Path="!DisplayType" />
+										</MultiBinding>
+									</StackPanel.IsEnabled>
+									
+									<NumericUpDown Value="{Binding Value}" />
+								</StackPanel>
+
+								<StackPanel Grid.Row="0" Grid.Column="0">
+									
+									<StackPanel.IsVisible>
+										<MultiBinding Converter="{x:Static BoolConverters.And}">
+											<Binding Path="!IsDate"/>
+											<Binding Path="DisplayType" />
+										</MultiBinding>
+									</StackPanel.IsVisible>
+									<StackPanel.IsEnabled>
+										<MultiBinding Converter="{x:Static BoolConverters.And}">
+											<Binding Path="!IsDate"/>
+											<Binding Path="DisplayType" />
+										</MultiBinding>
+									</StackPanel.IsEnabled>
+									
+									<TextBox Text="{Binding Value}"/>
+								</StackPanel>
+
+								<StackPanel IsVisible="{Binding IsDate}" IsEnabled="{Binding IsDate}"
+											Grid.Row="0" Grid.Column="0">
+									<DatePicker SelectedDate="{Binding Value}"/>
+								</StackPanel>
+							</Grid>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+
+			</DataGrid.Columns>
+		</DataGrid>
+
+	</Grid>
+</UserControl>
